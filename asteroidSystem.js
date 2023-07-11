@@ -45,9 +45,12 @@ class AsteroidSystem {
   draw() {
     noStroke();
     fill(200);
-    for (let i = 0; i < this.locations.length; i++) {
+    let i = 0;
+    while (i < this.locations.length) {
       const asteroid = this.asteroids[i];
-      ellipse(asteroid.location.x, asteroid.location.y, asteroid.diameter, asteroid.diameter);
+      if(asteroid != null)
+        ellipse(asteroid.location.x, asteroid.location.y, asteroid.diameter, asteroid.diameter);
+      i++;
     }
   }
 

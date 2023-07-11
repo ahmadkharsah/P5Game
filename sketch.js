@@ -49,23 +49,34 @@ function drawEarth(){
 // Checks collisions between all types of bodies
 // Checks collisions between all types of bodies
 function checkCollisions() {
+
   // Asteroid-earth collisions
   for (let i = 0; i < asteroids.asteroids.length; i++) {
     const asteroid = asteroids.asteroids[i];
-    if (isInside(asteroid.location, createVector(asteroid.size, asteroid.size), earthLoc, earthSize)) {
+    if (isInside(earthLoc,
+                createVector(earthSize.x,earthSize.y),
+                asteroid.location,
+                createVector(asteroid.size,asteroid.size))) {
       gameOver();
     }
   }
 
   // Spaceship-earth collision
-  if (isInside(spaceship.location, createVector(spaceship.size, spaceship.size), earthLoc, earthSize)) {
+  if (isInside(
+    spaceship.location, 
+    createVector(spaceship.size, spaceship.size), 
+    earthLoc, earthSize)) {
     gameOver();
   }
 
   // Spaceship-asteroid collision
   for (let i = 0; i < asteroids.asteroids.length; i++) {
     const asteroid = asteroids.asteroids[i];
-    if (isInside(spaceship.location, createVector(spaceship.size, spaceship.size), asteroid.location, createVector(asteroid.size, asteroid.size))) {
+    if (isInside(
+      spaceship.location, 
+      createVector(spaceship.size, spaceship.size), 
+      asteroid.location, 
+      createVector(asteroid.size, asteroid.size))) {
       gameOver();
     }
   }
@@ -77,11 +88,16 @@ function checkCollisions() {
 
   // Bullet collisions
   const bullets = spaceship.bulletSys.bullets;
+
   for (let i = bullets.length - 1; i >= 0; i--) {
     const bullet = bullets[i];
     for (let j = asteroids.asteroids.length - 1; j >= 0; j--) {
       const asteroid = asteroids.asteroids[j];
-      if (isInside(createVector(bullet.x,bullet.y), createVector(spaceship.bulletSys.diam, spaceship.bulletSys.diam), asteroid.location,asteroid.diameter)) {
+      if (isInside(
+        createVector(bullet.x,bullet.y), 
+        createVector(spaceship.bulletSys.diam, spaceship.bulletSys.diam), 
+        asteroid.location,
+        createVector(asteroid.diameter,asteroid.diameter))) {
         asteroids.asteroids.splice(j, 1);
         bullets.splice(i, 1);
         break;
@@ -95,13 +111,7 @@ function isInside(locA, sizeA, locB, sizeB){
   const distance = dist(locA.x, locA.y, locB.x, locB.y);
   const radiusA = sizeA.x / 2;
   const radiusB = sizeB.x / 2;
-
-  if (distance < radiusA + radiusB) {
-    return true; // Collision detected
-    console.log(Crash);
-  }
-  return false; // No collisio
-  console.log(safe);
+  return distance < radiusA + radiusB;
 }
 
 //////////////////////////////////////////////////
